@@ -147,7 +147,7 @@ header{
     margin-bottom: 1rem;
 }
 
-.escrito>button{
+.escrito>a{
     font-family: mulish, serif;
     color: #fff;
     text-transform: uppercase;
@@ -375,6 +375,7 @@ label{
     background-color: #ececec;;
     border: 0;
     margin: 5px;
+    cursor: pointer;
 }
 
 .card-edit-butt:hover{
