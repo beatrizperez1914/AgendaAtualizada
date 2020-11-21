@@ -7,5 +7,5 @@ Realizada atraves do git hub
 
 - :package: Nova funcionalidade 
 - :up: atualização 
-- :beeatle: correção de bug 
-- :checkred_flag: release 
+- :beetle: correção de bug 
+- :checkered_flag: release 
