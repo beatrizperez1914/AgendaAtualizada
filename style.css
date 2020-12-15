@@ -259,17 +259,17 @@ label{
     opacity: 0.8;
 }
 
-#sec-listContato{
+#sec-listaContato{
     margin-bottom: 10%;
 }
-#sec-listContato>h2 {
+#sec-listaContato>h2 {
     margin-top: 2rem;
     text-align: center;
     font-family: var(--font-secundaria);
     font-weight: 150;
 }
 
-#sec-listContato>input{
+#sec-listaContato>input{
     font-family: var(--font-primaria);
     width: 100%;
     max-width: 800px;
