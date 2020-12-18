@@ -391,6 +391,23 @@ label{
     background-color: #d2dae2;
 }
 
+.card-del-butt{
+    position: absolute;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    background-color: #ececec;;
+    border: 0;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.card-del-butt:hover{
+    background-color: #d2dae2;
+}
+
 .saibamais{
     width: 100%;
     height: 100%;

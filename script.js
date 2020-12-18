@@ -7,7 +7,13 @@ var sec_listaContato = document.getElementById("lista-contato");
 var input_pesquisa = document.getElementById("input_pesquisa");
 
 
-var ListaBase = [] //lista o cadastro
+var ListaBase = [
+    {nome: 'ito', email:'ito@', avatar: ''},
+    {nome: 'bea', email:'bea@', avatar: ''},
+    {nome: 'pai', email:'pai@', avatar: ''},
+    {nome: 'ito2', email:'ito2@', avatar: ''},
+
+] //lista o cadastro
 
 hamburguer.addEventListener("click", function () {
     var barralat = document.querySelector(".barralat").classList.toggle("show-menu");
@@ -34,26 +40,33 @@ input_nome.addEventListener("focus", function (evento) {
 })
 
 
-function montaLista() {
+function montaLista(lista) {
     var NovaTag = ''; //variavel vazia
     console.log("estou montando a lista")
-    ListaBase.map(function (obj) { //lista filtrada onde o map vai passar pelo obj  
+    lista.map(function (obj) { //lista filtrada onde o map vai passar pelo obj  
         //nova tag vai receber o html 
-        NovaTag += ` 
-        <li class="card">
-        <button class="card-edit-butt" email="${obj.email}">  
-             <i class="far fa-edit"></i>
-        </button>
-        <img src="${obj.avatar}" alt="" class="card-midia">
-        <h3>${obj.nome}</h3>
-        <h3>${obj.email}</h3>
-    </li>`
+        NovaTag += getHTMLCard(obj)
     })
 
     sec_listaContato.innerHTML = NovaTag;//atributo que monta o html
 
     limpaTela(); //função 
     criaListenerDeEventos();//função    
+}
+
+function getHTMLCard(obj){
+    return ` 
+    <li class="card">
+    <button class="card-edit-butt" email="${obj.email}">  
+         <i class="far fa-edit"></i>
+    </button>
+    <button class="card-del-butt" email="${obj.email}">  
+         <i class="far fa-edit"></i>
+    </button>
+    <img src="${obj.avatar}" alt="" class="card-midia">
+    <h3>${obj.nome}</h3>
+    <h3>${obj.email}</h3>
+</li>`
 }
 
 function limpaTela() {
@@ -85,7 +98,7 @@ function preencheTelaPorEmail(email){
 
 input_pesquisa.addEventListener("keyup", () => {
     if("" === input_pesquisa.value){
-        montaLista()
+        montaLista(ListaBase)
         return;
     }
     
@@ -94,46 +107,10 @@ input_pesquisa.addEventListener("keyup", () => {
         return obj.email.startsWith(input_pesquisa.value);
     })
     console.log("encontrado", bunda)
-    if(bunda.length === 0){
-        sec_listaContato.innerHTML= "";
-        return;
-    }
-    var TagFiltrada = "";
-
-    bunda.map((obj)=>{
-        TagFiltrada += ` 
-        <li class="card">
-        <button class="card-edit-butt" email="${obj.email}">  
-             <i class="far fa-edit"></i>
-        </button>
-        <img src="${obj.avatar}" alt="" class="card-midia">
-        <h3>${obj.nome}</h3>
-        <h3>${obj.email}</h3>
-        </li>`
-    })
-
-    sec_listaContato.innerHTML = TagFiltrada;
-
-    
-   
+    montaLista(bunda);
 })
 
-
-montaLista();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+montaLista(ListaBase);
 
 
 
