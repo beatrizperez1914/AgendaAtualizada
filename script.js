@@ -3,44 +3,43 @@ var btn_adicionar = document.getElementById("but-add");
 var input_nome = document.getElementById("input_nome");
 var input_email = document.getElementById("input_email");
 var input_avatar = document.getElementById("input_avatar");
-var sec_listaContato = document.getElementById("lista-contato");
+var sec_listaContato = document.getElementById("lista-contato"); 
+var input_pesquisa = document.getElementById("input_pesquisa");
 
-var ListaBase = [];
-var ListaFiltrada = [];
+var ListaBase = [{nome: "ito", email: "ito@", avatar: ""},{nome: "ito2", email: "ito2@", avatar: ""},{nome: "pai", email: "pai@", avatar: ""}]; //lista o cadastro
+var ListaFiltrada = []; //lista a pesquisa depois do inseri o email
 
 hamburguer.addEventListener("click", function () {
     var barralat = document.querySelector(".barralat").classList.toggle("show-menu");
 });
 
 btn_adicionar.addEventListener("click", function (evento) {
-    evento.preventDefault();
-    var nomeInputado = input_nome.value;
-    var emailInputado = input_email.value;
-    var avatarInputado = input_avatar.value;
+    console.log("passei pela função");
+    evento.preventDefault();// nao faz o recarregamento da pagina quando clica no botão 
+    var nomeInputado = input_nome.value; //recebe o valor que está na variavel
+    var emailInputado = input_email.value;//recebe o valor que está na variavel
+    var avatarInputado = input_avatar.value;//recebe o valor que está na variavel
+    console.log("passei de novo ");
+    ListaBase = ListaBase.filter(obj=>obj.email != emailInputado.value);//filtra a lista base atraves do email
+    ListaBase.push({ nome: nomeInputado, email: emailInputado, avatar: avatarInputado }); //"sobe" o nome email e o avatar
+    console.log("passei de novo 1", ListaBase);
+    
+    montaLista();//faz a função de montar a lista 
+    console.log("passei de novo ");
 
-    console.log('antes do filtro', ListaBase);
-    ListaBase = ListaBase.filter(obj=>obj.email != emailInputado);
-    console.log('depois do filtro', ListaBase);
-    ListaBase.push({ nome: nomeInputado, email: emailInputado, avatar: avatarInputado });
-    console.log('depois de inserido', ListaBase);
-
-    montaLista();
 });
 
 input_nome.addEventListener("focus", function (evento) {
-    evento.target.select();
+    evento.target.select(); //adiciona um evento de foco no input nome 
 })
 
-function filtraLista(){
-    /** Vai a logica para aplicar o filtro antes de montar a lista */
-    /** se tiver preenchido a pesquisa, faz o filtro se nao mnostra tudo */
-    ListaFiltrada = ListaBase.filter(obj=> obj.email === "ayrtonkrizan@gmail.com");
-}
+
 function montaLista() {
-    var NovaTag = '';
-    filtraLista();
-    ListaFiltrada.map(function (obj) {
-        NovaTag += `
+    var NovaTag = ''; //variavel vazia
+    console.log("estou montando a lista")
+    ListaBase.map(function (obj) { //lista filtrada onde o map vai passar pelo obj  
+        //nova tag vai receber o html 
+        NovaTag += ` 
         <li class="card">
         <button class="card-edit-butt" email="${obj.email}">  
              <i class="far fa-edit"></i>
@@ -48,34 +47,33 @@ function montaLista() {
         <img src="${obj.avatar}" alt="" class="card-midia">
         <h3>${obj.nome}</h3>
         <h3>${obj.email}</h3>
-
     </li>`
     })
 
-    sec_listaContato.innerHTML = NovaTag;
+    sec_listaContato.innerHTML = NovaTag;//atributo que monta o html
 
-    limpaTela();
-    criaListenerDeEventos();    
+    limpaTela(); //função 
+    criaListenerDeEventos();//função    
 }
 
 function limpaTela() {
-    input_nome.value = "";
-    input_email.value = "";
-    input_avatar.value = "";
+    input_nome.value = ""; //o conteudo do input  fica vazio 
+    input_email.value = "";//o conteudo do input  fica vazio 
+    input_avatar.value = "";//o conteudo do input  fica vazio 
 }
 
 function criaListenerDeEventos() {
-    var htmlcollection = document.getElementsByClassName('card-edit-butt');
-    Object.values(htmlcollection).map(el=>{
-        let emailElemento = el.getAttribute('email');
-        el.addEventListener("click", ()=>preencheTelaPorEmail(emailElemento));
+    var htmlcollection = document.getElementsByClassName('card-edit-butt');//ela "cata " todos que tem essa classe 
+    Object.values(htmlcollection).map(el=>{ //objeto tranformado em um array 
+        let emailElemento = el.getAttribute('email') //pega na tag o atributo chamado email                                                                                                                                                                                                                                                            
+      el.addEventListener("click", ()=>preencheTelaPorEmail(emailElemento)); 
     })
 }
 
 function preencheTelaPorEmail(email){
     console.log(email, ListaBase);
 
-    let objetoEncontrado = ListaBase.find(obj=>{
+    let objetoEncontrado = ListaBase.find(obj=>{ //find = procura 
         return obj.email === email
     });
 
@@ -83,3 +81,59 @@ function preencheTelaPorEmail(email){
     input_email.value = objetoEncontrado.email;
     input_avatar.value = objetoEncontrado.avatar;
 }
+
+
+input_pesquisa.addEventListener("keyup", () => {
+    if("" === input_pesquisa.value){
+        montaLista()
+        return;
+    }
+    
+    var encontrado = ListaBase.find((obj) => {
+        console.log("input pesquisa",input_pesquisa.value)
+        return obj.email.startsWith(input_pesquisa.value);
+    })
+
+    if(encontrado === undefined){
+        sec_listaContato.innerHTML= "";
+        return;
+    }
+
+    var NovaTagFiltrada = ` 
+    <li class="card">
+    <button class="card-edit-butt" email="${encontrado.email}">  
+         <i class="far fa-edit"></i>
+    </button>
+    <img src="${encontrado.avatar}" alt="" class="card-midia">
+    <h3>${encontrado.nome}</h3>
+    <h3>${encontrado.email}</h3>
+    </li>`
+
+    sec_listaContato.innerHTML = NovaTagFiltrada;
+
+    
+   
+})
+
+
+montaLista();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//map cria uma nova lista a partir de uma lista 
+//startWith começa com... pesquisa quando digita 
