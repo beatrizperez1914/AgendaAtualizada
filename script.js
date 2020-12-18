@@ -6,8 +6,8 @@ var input_avatar = document.getElementById("input_avatar");
 var sec_listaContato = document.getElementById("lista-contato"); 
 var input_pesquisa = document.getElementById("input_pesquisa");
 
-var ListaBase = [{nome: "ito", email: "ito@", avatar: ""},{nome: "ito2", email: "ito2@", avatar: ""},{nome: "pai", email: "pai@", avatar: ""}]; //lista o cadastro
-var ListaFiltrada = []; //lista a pesquisa depois do inseri o email
+
+var ListaBase = [] //lista o cadastro
 
 hamburguer.addEventListener("click", function () {
     var barralat = document.querySelector(".barralat").classList.toggle("show-menu");
@@ -89,27 +89,30 @@ input_pesquisa.addEventListener("keyup", () => {
         return;
     }
     
-    var encontrado = ListaBase.find((obj) => {
+    var bunda = ListaBase.filter((obj) => {
         console.log("input pesquisa",input_pesquisa.value)
         return obj.email.startsWith(input_pesquisa.value);
     })
-
-    if(encontrado === undefined){
+    console.log("encontrado", bunda)
+    if(bunda.length === 0){
         sec_listaContato.innerHTML= "";
         return;
     }
+    var TagFiltrada = "";
 
-    var NovaTagFiltrada = ` 
-    <li class="card">
-    <button class="card-edit-butt" email="${encontrado.email}">  
-         <i class="far fa-edit"></i>
-    </button>
-    <img src="${encontrado.avatar}" alt="" class="card-midia">
-    <h3>${encontrado.nome}</h3>
-    <h3>${encontrado.email}</h3>
-    </li>`
+    bunda.map((obj)=>{
+        TagFiltrada += ` 
+        <li class="card">
+        <button class="card-edit-butt" email="${obj.email}">  
+             <i class="far fa-edit"></i>
+        </button>
+        <img src="${obj.avatar}" alt="" class="card-midia">
+        <h3>${obj.nome}</h3>
+        <h3>${obj.email}</h3>
+        </li>`
+    })
 
-    sec_listaContato.innerHTML = NovaTagFiltrada;
+    sec_listaContato.innerHTML = TagFiltrada;
 
     
    
