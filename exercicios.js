@@ -12,6 +12,8 @@
  * A partir do Objeto BondeDosFunkeiro devolver os que ja foram presos mais de 3 vezes
  */
 
+
+
 const BondeDasPopuzudas = [
     {nome: 'Joaquina', cintura: 85},
     {nome: 'Raquel', cintura: 350},
@@ -34,3 +36,26 @@ const somaDoisParametros = (a, b) =>{
     console.log(a + b);
     return a+b;
 }
+
+
+//Multiplicar 3 valores
+const multiplicaValores = (a,b,c) =>{
+    console.log(a*b*c) ;
+    return a * b * c;
+}
+
+//Dividir 
+const divideValores  = (a, b ) =>{
+    console.log (a / b);
+    return a / b;
+}
+
+//fatora um numero
+const fatora = n => {
+    if (n > 1) {
+        return n * fatorial(n - 1)
+    }
+    return n
+}
+
+//
